@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    RED.nodes.registerType('simple-gemini-vision',{
+        category: 'Gemini',
+        color: '#FDD0A2',
+        defaults: {
+            name: {value: ""},
+            prompt:{value: "", validate: RED.validators.typedInput("promptType")},
+            promptType: {value: "str"},
+            Token:{value: "", required:true},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "arrow-in.png",
+        label: function() {
+            return this.name||"simple-gemini-vision";
+        },
+        oneditprepare: function () {
+            $('#node-input-prompt').typedInput({
+                default: 'msg',
+                typeField: $("#node-input-promptType"),
+                types: ['msg', 'flow', 'global', 'str', 'jsonata']
+            });
+        }
+    });
+ </script>
+ 
+ <script type="text/html" data-template-name="simple-gemini-vision">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label style="padding-top: 8px" for="node-input-prompt"><i class="fa fa-ellipsis-h"></i> Prompt</label>
+        <input type="text" id="node-input-prompt">
+        <input type="hidden" id="node-input-promptType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Token">
+            <i class="icon-tag"></i>
+            API Key
+        </label>
+        <input type="password" id="node-input-Token" placeholder="API Key">
+    </div>
+</script>
+ 
+<script type="text/html" data-help-name="simple-gemini-vision">
+    <p>入力した画像の解析を行います。プロンプトに解析したい言葉を入力してください。</p>
+    <h3>入力</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd> 解析する画像のURLかbase64形式を指定してください。</dd>
+        <dt class="optional">prompt <span class="property-type">string</span></dt>
+        <dd> 解析したいプロンプトを入力してください。<br/>例)何が写っている？</dd>
+        <dt class="optional">API Key <span class="property-type">string</span></dt>
+        <dd> GeminiのAPIキーです。</dd>
+    </dl>
+    <h3>出力</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd> プロンプト内容に従って解析した結果を返します。 </dd>
+    </dl>
+ </script>
